@@ -2,7 +2,6 @@ package riotgamespatchnotes
 
 import (
 	"fmt"
-	"log"
 	"reflect"
 	"testing"
 	"time"
@@ -15,7 +14,7 @@ func TestNewLOLArticles(t *testing.T) {
 			if err != nil {
 				t.Errorf("NewLOLArticles() error = %v", err)
 			}
-			log.Printf(articles.LOLPatchNotes()[0].Title)
+			t.Logf(articles.LOLPatchNotes()[0].Title)
 
 			time.Sleep(1 * time.Second)
 		})
