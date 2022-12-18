@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewLOLGameUpdatesRequest(t *testing.T) {
+func TestNewWebsiteRequest(t *testing.T) {
 	type args struct {
 		ctx    context.Context
 		locale string
@@ -22,9 +22,9 @@ func TestNewLOLGameUpdatesRequest(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := NewLOLGameUpdatesRequest(tt.args.ctx, tt.args.locale)
+			_, err := NewLOLWebsiteRequest(tt.args.ctx, tt.args.locale)
 			if err == nil {
-				t.Errorf("NewLOLGameUpdatesRequest() error = %v", err)
+				t.Errorf("NewWebsiteRequest() error = %v", err)
 				return
 			}
 		})

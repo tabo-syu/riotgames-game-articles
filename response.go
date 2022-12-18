@@ -71,7 +71,7 @@ func (a Articles) FilterByTagName(tagName string) *Articles {
 	return &Articles{Content: patchNotes}
 }
 
-type GameUpdates struct {
+type ArticlesResponse struct {
 	Result struct {
 		Data struct {
 			All struct {
@@ -83,7 +83,7 @@ type GameUpdates struct {
 	} `json:"result"`
 }
 
-func (g GameUpdates) ToArticles() *Articles {
+func (g ArticlesResponse) ToArticles() *Articles {
 	var articles []*Article
 	for _, node := range g.Result.Data.All.Nodes {
 		for _, article := range node.Articles {
@@ -95,17 +95,17 @@ func (g GameUpdates) ToArticles() *Articles {
 	return &Articles{Content: articles}
 }
 
-type GameUpdatesResponse struct {
+type WebsiteResponse struct {
 	Res *http.Response
 }
 
-func (r GameUpdatesResponse) Body() (*GameUpdates, error) {
+func (r WebsiteResponse) Body() (*ArticlesResponse, error) {
 	body, err := io.ReadAll(r.Res.Body)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read resources: %w", err)
 	}
 
-	var result GameUpdates
+	var result ArticlesResponse
 	if err := json.Unmarshal(body, &result); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal json: %w", err)
 	}

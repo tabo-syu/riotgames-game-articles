@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestArticles_FilterByTag(t *testing.T) {
+func TestArticlesResponse_FilterByTag(t *testing.T) {
 	type fields struct {
 		Content []*Article
 	}
@@ -44,7 +44,7 @@ func TestArticles_FilterByTag(t *testing.T) {
 				Content: tt.fields.Content,
 			}
 			if got := a.FilterByTagName(tt.args.tagName); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Articles.FilterByTag() = %v, want %v", got, tt.want)
+				t.Errorf("ArticlesResponse.FilterByTag() = %v, want %v", got, tt.want)
 			}
 		})
 	}

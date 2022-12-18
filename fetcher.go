@@ -20,7 +20,7 @@ func NewFetcher() *Fetcher {
 	return &Fetcher{client: client.StandardClient()}
 }
 
-func (f Fetcher) Fetch(req *GameUpdatesRequest) (*GameUpdatesResponse, error) {
+func (f Fetcher) Fetch(req *WebsiteRequest) (*WebsiteResponse, error) {
 	res, err := f.client.Do(req.Req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to fetch resources: %w", err)
@@ -30,5 +30,5 @@ func (f Fetcher) Fetch(req *GameUpdatesRequest) (*GameUpdatesResponse, error) {
 		return nil, fmt.Errorf("status code was not 200: %w", err)
 	}
 
-	return &GameUpdatesResponse{Res: res}, nil
+	return &WebsiteResponse{Res: res}, nil
 }

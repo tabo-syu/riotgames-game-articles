@@ -40,11 +40,11 @@ var (
 	LOLLocales = []string{EnUs, EnGb, DeDe, EsEs, FrFr, ItIt, EnPl, PlPl, ElGr, RoRo, HuHu, CsCz, EsMx, PtBr, JaJp, RuRu, TrTr, EnAu, KoKr}
 )
 
-type GameUpdatesRequest struct {
+type WebsiteRequest struct {
 	Req *http.Request
 }
 
-func NewGameUpdatesRequest(ctx context.Context, domain string, locale string) (*GameUpdatesRequest, error) {
+func NewWebsiteRequest(ctx context.Context, domain string, locale string) (*WebsiteRequest, error) {
 	req, err := http.NewRequestWithContext(
 		ctx,
 		http.MethodGet,
@@ -55,13 +55,13 @@ func NewGameUpdatesRequest(ctx context.Context, domain string, locale string) (*
 		return nil, fmt.Errorf("failed to generate request: %w", err)
 	}
 
-	return &GameUpdatesRequest{Req: req}, nil
+	return &WebsiteRequest{Req: req}, nil
 }
 
-func NewLOLGameUpdatesRequest(ctx context.Context, locale string) (*GameUpdatesRequest, error) {
+func NewLOLWebsiteRequest(ctx context.Context, locale string) (*WebsiteRequest, error) {
 	if !slices.Contains(LOLLocales, locale) {
 		return nil, fmt.Errorf("invalid locale specified for %s: %s", lolSiteDomain, locale)
 	}
 
-	return NewGameUpdatesRequest(ctx, lolSiteDomain, locale)
+	return NewWebsiteRequest(ctx, lolSiteDomain, locale)
 }
