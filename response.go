@@ -74,22 +74,20 @@ func (a Articles) FilterByTagName(tagName string) *Articles {
 type ArticlesResponse struct {
 	Result struct {
 		Data struct {
-			All struct {
-				Nodes []struct {
-					Articles []Article `json:"articles"`
-				} `json:"nodes"`
-			} `json:"all"`
+			AllArticles struct {
+				Edges []struct {
+					Article Article `json:"node"`
+				} `json:"edges"`
+			} `json:"allArticles"`
 		} `json:"data"`
 	} `json:"result"`
 }
 
 func (g ArticlesResponse) ToArticles() *Articles {
 	var articles []*Article
-	for _, node := range g.Result.Data.All.Nodes {
-		for _, article := range node.Articles {
-			a := article
-			articles = append(articles, &a)
-		}
+	for _, edge := range g.Result.Data.AllArticles.Edges {
+		a := edge.Article
+		articles = append(articles, &a)
 	}
 
 	return &Articles{Content: articles}

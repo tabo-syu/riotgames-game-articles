@@ -48,7 +48,7 @@ func NewWebsiteRequest(ctx context.Context, domain string, locale string) (*Webs
 	req, err := http.NewRequestWithContext(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("https://%s/page-data/%s/news/game-updates/page-data.json", domain, locale),
+		fmt.Sprintf("https://%s/page-data/%s/latest-news/page-data.json", domain, locale),
 		nil,
 	)
 	if err != nil {
