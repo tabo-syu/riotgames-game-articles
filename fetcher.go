@@ -20,7 +20,7 @@ func NewFetcher() *Fetcher {
 	return &Fetcher{client: client.StandardClient()}
 }
 
-func (f Fetcher) Fetch(req *WebsiteRequest) (*WebsiteResponse, error) {
+func (f Fetcher) FetchLOL(req *LOLWebsiteRequest) (*LOLWebsiteResponse, error) {
 	res, err := f.client.Do(req.Req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to fetch resources: %w", err)
@@ -30,5 +30,18 @@ func (f Fetcher) Fetch(req *WebsiteRequest) (*WebsiteResponse, error) {
 		return nil, fmt.Errorf("status code was not 200: %w", err)
 	}
 
-	return &WebsiteResponse{Res: res}, nil
+	return &LOLWebsiteResponse{Res: res}, nil
+}
+
+func (f Fetcher) FetchValorant(req *ValorantWebsiteRequest) (*ValorantWebsiteResponse, error) {
+	res, err := f.client.Do(req.Req)
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch resources: %w", err)
+	}
+
+	if res.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("status code was not 200: %w", err)
+	}
+
+	return &ValorantWebsiteResponse{Res: res}, nil
 }

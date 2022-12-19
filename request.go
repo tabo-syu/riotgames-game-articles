@@ -10,10 +10,10 @@ import (
 
 // domain
 const (
-	lolSiteDomain = "www.leagueoflegends.com"
+	lolSiteDomain      = "www.leagueoflegends.com"
+	valorantSiteDomain = "playvalorant.com"
 )
 
-// supported locales
 const (
 	EnUs = "en-us"
 	EnGb = "en-gb"
@@ -34,21 +34,28 @@ const (
 	TrTr = "tr-tr"
 	EnAu = "en-au"
 	KoKr = "ko-kr"
+	IdId = "id-id"
+	ThTh = "th-th"
+	ViVn = "vi-vn"
+	ZhTw = "zh-tw"
+	ArAe = "ar-ae"
 )
 
+// supported locales
 var (
-	LOLLocales = []string{EnUs, EnGb, DeDe, EsEs, FrFr, ItIt, EnPl, PlPl, ElGr, RoRo, HuHu, CsCz, EsMx, PtBr, JaJp, RuRu, TrTr, EnAu, KoKr}
+	LOLLocales      = []string{EnUs, EnGb, DeDe, EsEs, FrFr, ItIt, EnPl, PlPl, ElGr, RoRo, HuHu, CsCz, EsMx, PtBr, JaJp, RuRu, TrTr, EnAu, KoKr}
+	ValorantLocales = []string{EnUs, EnGb, DeDe, EsEs, FrFr, ItIt, PlPl, RuRu, TrTr, EsMx, IdId, KoKr, PtBr, ThTh, ViVn, ZhTw, ArAe}
 )
 
 type WebsiteRequest struct {
 	Req *http.Request
 }
 
-func NewWebsiteRequest(ctx context.Context, domain string, locale string) (*WebsiteRequest, error) {
+func NewWebsiteRequest(ctx context.Context, url string) (*WebsiteRequest, error) {
 	req, err := http.NewRequestWithContext(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("https://%s/page-data/%s/latest-news/page-data.json", domain, locale),
+		url,
 		nil,
 	)
 	if err != nil {
@@ -60,10 +67,36 @@ func NewWebsiteRequest(ctx context.Context, domain string, locale string) (*Webs
 	return &WebsiteRequest{Req: req}, nil
 }
 
-func NewLOLWebsiteRequest(ctx context.Context, locale string) (*WebsiteRequest, error) {
+type LOLWebsiteRequest WebsiteRequest
+
+func NewLOLWebsiteRequest(ctx context.Context, locale string) (*LOLWebsiteRequest, error) {
 	if !slices.Contains(LOLLocales, locale) {
 		return nil, fmt.Errorf("invalid locale specified for %s: %s", lolSiteDomain, locale)
 	}
 
-	return NewWebsiteRequest(ctx, lolSiteDomain, locale)
+	req, err := NewWebsiteRequest(ctx, fmt.Sprintf("https://%s/page-data/%s/latest-news/page-data.json", lolSiteDomain, locale))
+	if err != nil {
+		return nil, fmt.Errorf("failed to generate LOLWebsiteRequest: %w", err)
+	}
+
+	lolReq := LOLWebsiteRequest(*req)
+
+	return &lolReq, nil
+}
+
+type ValorantWebsiteRequest WebsiteRequest
+
+func NewValorantWebsiteRequest(ctx context.Context, locale string) (*ValorantWebsiteRequest, error) {
+	if !slices.Contains(ValorantLocales, locale) {
+		return nil, fmt.Errorf("invalid locale specified for %s: %s", valorantSiteDomain, locale)
+	}
+
+	req, err := NewWebsiteRequest(ctx, fmt.Sprintf("https://%s/page-data/%s/news/page-data.json", valorantSiteDomain, locale))
+	if err != nil {
+		return nil, fmt.Errorf("failed to generate NewValorantWebsiteRequest: %w", err)
+	}
+
+	valoReq := ValorantWebsiteRequest(*req)
+
+	return &valoReq, nil
 }
