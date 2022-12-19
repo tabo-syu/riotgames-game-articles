@@ -7,12 +7,12 @@ import (
 	"time"
 )
 
-func TestNewLOLArticles(t *testing.T) {
+func TestNewLOLWebsiteArticles(t *testing.T) {
 	for _, locale := range LOLLocales {
 		t.Run(fmt.Sprintf("locale: %s", locale), func(t *testing.T) {
-			articles, err := NewLOLArticles(locale)
+			articles, err := NewLOLWebsiteArticles(locale)
 			if err != nil {
-				t.Errorf("NewLOLArticles() error = %v", err)
+				t.Errorf("NewLOLWebsiteArticles() error = %v", err)
 			}
 			t.Logf(articles.LOLPatchNotes()[0].Title)
 
@@ -21,7 +21,7 @@ func TestNewLOLArticles(t *testing.T) {
 	}
 }
 
-func TestLOLArticles_All(t *testing.T) {
+func TestLOLWebsiteArticles_All(t *testing.T) {
 	type fields struct {
 		Articles *Articles
 	}
@@ -52,17 +52,17 @@ func TestLOLArticles_All(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			l := LOLArticles{
+			l := LOLWebsiteArticles{
 				Articles: tt.fields.Articles,
 			}
 			if got := l.All(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("LOLArticles.All() = %v, want %v", got, tt.want)
+				t.Errorf("LOLWebsiteArticles.All() = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
-func TestLOLArticles_LOLPatchNotes(t *testing.T) {
+func TestLOLWebsiteArticles_LOLPatchNotes(t *testing.T) {
 	type fields struct {
 		Articles *Articles
 	}
@@ -91,17 +91,17 @@ func TestLOLArticles_LOLPatchNotes(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			l := LOLArticles{
+			l := LOLWebsiteArticles{
 				Articles: tt.fields.Articles,
 			}
 			if got := l.LOLPatchNotes(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("LOLArticles.LOLPatchNotes() = %v, want %v", got, tt.want)
+				t.Errorf("LOLWebsiteArticles.LOLPatchNotes() = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
-func TestLOLArticles_TFTPatchNotes(t *testing.T) {
+func TestLOLWebsiteArticles_TFTPatchNotes(t *testing.T) {
 	type fields struct {
 		Articles *Articles
 	}
@@ -130,11 +130,11 @@ func TestLOLArticles_TFTPatchNotes(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			l := LOLArticles{
+			l := LOLWebsiteArticles{
 				Articles: tt.fields.Articles,
 			}
 			if got := l.TFTPatchNotes(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("LOLArticles.TFTPatchNotes() = %v, want %v", got, tt.want)
+				t.Errorf("LOLWebsiteArticles.TFTPatchNotes() = %v, want %v", got, tt.want)
 			}
 		})
 	}

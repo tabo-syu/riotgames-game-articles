@@ -5,14 +5,14 @@ import (
 	"fmt"
 )
 
-type LOLArticles struct {
+type LOLWebsiteArticles struct {
 	Articles *Articles
 }
 
-func NewLOLArticles(locale string) (*LOLArticles, error) {
+func NewLOLWebsiteArticles(locale string) (*LOLWebsiteArticles, error) {
 	req, err := NewLOLWebsiteRequest(context.Background(), locale)
 	if err != nil {
-		return nil, fmt.Errorf("failed to initialize LOLGameUpdatesRequest: %w", err)
+		return nil, fmt.Errorf("failed to initialize NewLOLWebsiteArticles: %w", err)
 	}
 
 	res, err := NewFetcher().Fetch(req)
@@ -22,20 +22,20 @@ func NewLOLArticles(locale string) (*LOLArticles, error) {
 
 	result, err := res.Body()
 	if err != nil {
-		return nil, fmt.Errorf("failed to parse to GameUpdates: %w", err)
+		return nil, fmt.Errorf("failed to parse to ArticlesResponse: %w", err)
 	}
 
-	return &LOLArticles{result.ToArticles()}, err
+	return &LOLWebsiteArticles{result.ToArticles()}, err
 }
 
-func (l LOLArticles) All() []*Article {
+func (l LOLWebsiteArticles) All() []*Article {
 	return l.Articles.Content
 }
 
-func (l LOLArticles) LOLPatchNotes() []*Article {
+func (l LOLWebsiteArticles) LOLPatchNotes() []*Article {
 	return l.Articles.FilterByTagName(LOLPatchNoteTagName).Content
 }
 
-func (l LOLArticles) TFTPatchNotes() []*Article {
+func (l LOLWebsiteArticles) TFTPatchNotes() []*Article {
 	return l.Articles.FilterByTagName(TFTPatchNoteTagName).Content
 }
