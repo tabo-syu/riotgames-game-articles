@@ -55,6 +55,8 @@ func NewWebsiteRequest(ctx context.Context, domain string, locale string) (*Webs
 		return nil, fmt.Errorf("failed to generate request: %w", err)
 	}
 
+	req.Header.Add("User-Agent", "RiotGames Game Articles (https://github.com/tabo-syu/riotgames-game-articles)")
+
 	return &WebsiteRequest{Req: req}, nil
 }
 
