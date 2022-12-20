@@ -6,7 +6,7 @@ import (
 )
 
 type LOLWebsiteArticles struct {
-	Articles *LOLArticles
+	Articles *Articles[*LOLArticle]
 }
 
 func NewLOLWebsiteArticles(locale string) (*LOLWebsiteArticles, error) {
@@ -15,7 +15,7 @@ func NewLOLWebsiteArticles(locale string) (*LOLWebsiteArticles, error) {
 		return nil, fmt.Errorf("failed to initialize NewLOLWebsiteArticles: %w", err)
 	}
 
-	res, err := NewFetcher().FetchLOL(req)
+	res, err := NewFetcher[LOLArticlesResponse, *LOLArticle]().Fetch(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to fetch: %w", err)
 	}
@@ -41,7 +41,7 @@ func (l LOLWebsiteArticles) TFTPatchNotes() []*LOLArticle {
 }
 
 type ValorantWebsiteArticles struct {
-	Articles *ValorantArticles
+	Articles *Articles[*ValorantArticle]
 }
 
 func NewValorantWebsiteArticles(locale string) (*ValorantWebsiteArticles, error) {
@@ -50,7 +50,7 @@ func NewValorantWebsiteArticles(locale string) (*ValorantWebsiteArticles, error)
 		return nil, fmt.Errorf("failed to initialize NewValorantWebsiteArticles: %w", err)
 	}
 
-	res, err := NewFetcher().FetchValorant(req)
+	res, err := NewFetcher[ValorantArticlesResponse, *ValorantArticle]().Fetch(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to fetch: %w", err)
 	}

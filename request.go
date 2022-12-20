@@ -67,9 +67,7 @@ func NewWebsiteRequest(ctx context.Context, url string) (*WebsiteRequest, error)
 	return &WebsiteRequest{Req: req}, nil
 }
 
-type LOLWebsiteRequest WebsiteRequest
-
-func NewLOLWebsiteRequest(ctx context.Context, locale string) (*LOLWebsiteRequest, error) {
+func NewLOLWebsiteRequest(ctx context.Context, locale string) (*WebsiteRequest, error) {
 	if !slices.Contains(LOLLocales, locale) {
 		return nil, fmt.Errorf("invalid locale specified for %s: %s", lolSiteDomain, locale)
 	}
@@ -79,14 +77,10 @@ func NewLOLWebsiteRequest(ctx context.Context, locale string) (*LOLWebsiteReques
 		return nil, fmt.Errorf("failed to generate LOLWebsiteRequest: %w", err)
 	}
 
-	lolReq := LOLWebsiteRequest(*req)
-
-	return &lolReq, nil
+	return req, nil
 }
 
-type ValorantWebsiteRequest WebsiteRequest
-
-func NewValorantWebsiteRequest(ctx context.Context, locale string) (*ValorantWebsiteRequest, error) {
+func NewValorantWebsiteRequest(ctx context.Context, locale string) (*WebsiteRequest, error) {
 	if !slices.Contains(ValorantLocales, locale) {
 		return nil, fmt.Errorf("invalid locale specified for %s: %s", valorantSiteDomain, locale)
 	}
@@ -96,7 +90,5 @@ func NewValorantWebsiteRequest(ctx context.Context, locale string) (*ValorantWeb
 		return nil, fmt.Errorf("failed to generate NewValorantWebsiteRequest: %w", err)
 	}
 
-	valoReq := ValorantWebsiteRequest(*req)
-
-	return &valoReq, nil
+	return req, nil
 }

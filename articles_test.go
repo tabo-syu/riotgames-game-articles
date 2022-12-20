@@ -23,7 +23,7 @@ func TestNewLOLWebsiteArticles(t *testing.T) {
 
 func TestLOLWebsiteArticles_All(t *testing.T) {
 	type fields struct {
-		Articles *LOLArticles
+		Articles *Articles[*LOLArticle]
 	}
 	tests := []struct {
 		name   string
@@ -33,20 +33,20 @@ func TestLOLWebsiteArticles_All(t *testing.T) {
 		{
 			"Test all articles",
 			fields{
-				&LOLArticles{
+				&Articles[*LOLArticle]{
 					[]*LOLArticle{
-						{Title: "title1", ArticleTags: []LOLArticleTag{{MachineName: LOLPatchNoteTagName}, {MachineName: TFTPatchNoteTagName}}},
-						{Title: "title2", ArticleTags: []LOLArticleTag{{MachineName: LOLPatchNoteTagName}}},
-						{Title: "title3", ArticleTags: []LOLArticleTag{{MachineName: TFTPatchNoteTagName}}},
-						{Title: "title4", ArticleTags: []LOLArticleTag{}},
+						{Title: "title1", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}, {MachineName: TFTPatchNoteTagName}}},
+						{Title: "title2", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}}},
+						{Title: "title3", ArticleTags: []ArticleTag{{MachineName: TFTPatchNoteTagName}}},
+						{Title: "title4", ArticleTags: []ArticleTag{}},
 					},
 				},
 			},
 			[]*LOLArticle{
-				{Title: "title1", ArticleTags: []LOLArticleTag{{MachineName: LOLPatchNoteTagName}, {MachineName: TFTPatchNoteTagName}}},
-				{Title: "title2", ArticleTags: []LOLArticleTag{{MachineName: LOLPatchNoteTagName}}},
-				{Title: "title3", ArticleTags: []LOLArticleTag{{MachineName: TFTPatchNoteTagName}}},
-				{Title: "title4", ArticleTags: []LOLArticleTag{}},
+				{Title: "title1", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}, {MachineName: TFTPatchNoteTagName}}},
+				{Title: "title2", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}}},
+				{Title: "title3", ArticleTags: []ArticleTag{{MachineName: TFTPatchNoteTagName}}},
+				{Title: "title4", ArticleTags: []ArticleTag{}},
 			},
 		},
 	}
@@ -64,7 +64,7 @@ func TestLOLWebsiteArticles_All(t *testing.T) {
 
 func TestLOLWebsiteArticles_LOLPatchNotes(t *testing.T) {
 	type fields struct {
-		Articles *LOLArticles
+		Articles *Articles[*LOLArticle]
 	}
 	tests := []struct {
 		name   string
@@ -74,18 +74,18 @@ func TestLOLWebsiteArticles_LOLPatchNotes(t *testing.T) {
 		{
 			"Test all articles",
 			fields{
-				&LOLArticles{
+				&Articles[*LOLArticle]{
 					[]*LOLArticle{
-						{Title: "title1", ArticleTags: []LOLArticleTag{{MachineName: LOLPatchNoteTagName}, {MachineName: TFTPatchNoteTagName}}},
-						{Title: "title2", ArticleTags: []LOLArticleTag{{MachineName: LOLPatchNoteTagName}}},
-						{Title: "title3", ArticleTags: []LOLArticleTag{{MachineName: TFTPatchNoteTagName}}},
-						{Title: "title4", ArticleTags: []LOLArticleTag{}},
+						{Title: "title1", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}, {MachineName: TFTPatchNoteTagName}}},
+						{Title: "title2", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}}},
+						{Title: "title3", ArticleTags: []ArticleTag{{MachineName: TFTPatchNoteTagName}}},
+						{Title: "title4", ArticleTags: []ArticleTag{}},
 					},
 				},
 			},
 			[]*LOLArticle{
-				{Title: "title1", ArticleTags: []LOLArticleTag{{MachineName: LOLPatchNoteTagName}, {MachineName: TFTPatchNoteTagName}}},
-				{Title: "title2", ArticleTags: []LOLArticleTag{{MachineName: LOLPatchNoteTagName}}},
+				{Title: "title1", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}, {MachineName: TFTPatchNoteTagName}}},
+				{Title: "title2", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}}},
 			},
 		},
 	}
@@ -103,7 +103,7 @@ func TestLOLWebsiteArticles_LOLPatchNotes(t *testing.T) {
 
 func TestLOLWebsiteArticles_TFTPatchNotes(t *testing.T) {
 	type fields struct {
-		Articles *LOLArticles
+		Articles *Articles[*LOLArticle]
 	}
 	tests := []struct {
 		name   string
@@ -113,18 +113,18 @@ func TestLOLWebsiteArticles_TFTPatchNotes(t *testing.T) {
 		{
 			"Test all articles",
 			fields{
-				&LOLArticles{
+				&Articles[*LOLArticle]{
 					[]*LOLArticle{
-						{Title: "title1", ArticleTags: []LOLArticleTag{{MachineName: LOLPatchNoteTagName}, {MachineName: TFTPatchNoteTagName}}},
-						{Title: "title2", ArticleTags: []LOLArticleTag{{MachineName: LOLPatchNoteTagName}}},
-						{Title: "title3", ArticleTags: []LOLArticleTag{{MachineName: TFTPatchNoteTagName}}},
-						{Title: "title4", ArticleTags: []LOLArticleTag{}},
+						{Title: "title1", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}, {MachineName: TFTPatchNoteTagName}}},
+						{Title: "title2", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}}},
+						{Title: "title3", ArticleTags: []ArticleTag{{MachineName: TFTPatchNoteTagName}}},
+						{Title: "title4", ArticleTags: []ArticleTag{}},
 					},
 				},
 			},
 			[]*LOLArticle{
-				{Title: "title1", ArticleTags: []LOLArticleTag{{MachineName: LOLPatchNoteTagName}, {MachineName: TFTPatchNoteTagName}}},
-				{Title: "title3", ArticleTags: []LOLArticleTag{{MachineName: TFTPatchNoteTagName}}},
+				{Title: "title1", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}, {MachineName: TFTPatchNoteTagName}}},
+				{Title: "title3", ArticleTags: []ArticleTag{{MachineName: TFTPatchNoteTagName}}},
 			},
 		},
 	}
@@ -156,7 +156,7 @@ func TestNewValorantWebsiteArticles(t *testing.T) {
 
 func TestValorantWebsiteArticles_All(t *testing.T) {
 	type fields struct {
-		Articles *ValorantArticles
+		Articles *Articles[*ValorantArticle]
 	}
 	tests := []struct {
 		name   string
@@ -166,16 +166,16 @@ func TestValorantWebsiteArticles_All(t *testing.T) {
 		{
 			"Test all articles",
 			fields{
-				&ValorantArticles{
+				&Articles[*ValorantArticle]{
 					[]*ValorantArticle{
-						{Title: "title1", ArticleTags: []ValorantArticleTag{{MachineName: ValorantPatchNoteTagName}}},
-						{Title: "title2", ArticleTags: []ValorantArticleTag{}},
+						{Title: "title1", ArticleTags: []ArticleTag{{MachineName: ValorantPatchNoteTagName}}},
+						{Title: "title2", ArticleTags: []ArticleTag{}},
 					},
 				},
 			},
 			[]*ValorantArticle{
-				{Title: "title1", ArticleTags: []ValorantArticleTag{{MachineName: ValorantPatchNoteTagName}}},
-				{Title: "title2", ArticleTags: []ValorantArticleTag{}},
+				{Title: "title1", ArticleTags: []ArticleTag{{MachineName: ValorantPatchNoteTagName}}},
+				{Title: "title2", ArticleTags: []ArticleTag{}},
 			},
 		},
 	}
@@ -193,7 +193,7 @@ func TestValorantWebsiteArticles_All(t *testing.T) {
 
 func TestValorantWebsiteArticles_PatchNotes(t *testing.T) {
 	type fields struct {
-		Articles *ValorantArticles
+		Articles *Articles[*ValorantArticle]
 	}
 	tests := []struct {
 		name   string
@@ -203,15 +203,15 @@ func TestValorantWebsiteArticles_PatchNotes(t *testing.T) {
 		{
 			"Test all articles",
 			fields{
-				&ValorantArticles{
+				&Articles[*ValorantArticle]{
 					[]*ValorantArticle{
-						{Title: "title1", ArticleTags: []ValorantArticleTag{{MachineName: ValorantPatchNoteTagName}}},
-						{Title: "title2", ArticleTags: []ValorantArticleTag{}},
+						{Title: "title1", ArticleTags: []ArticleTag{{MachineName: ValorantPatchNoteTagName}}},
+						{Title: "title2", ArticleTags: []ArticleTag{}},
 					},
 				},
 			},
 			[]*ValorantArticle{
-				{Title: "title1", ArticleTags: []ValorantArticleTag{{MachineName: ValorantPatchNoteTagName}}},
+				{Title: "title1", ArticleTags: []ArticleTag{{MachineName: ValorantPatchNoteTagName}}},
 			},
 		},
 	}

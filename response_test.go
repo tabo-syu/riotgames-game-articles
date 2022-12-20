@@ -16,31 +16,31 @@ func TestArticlesResponse_FilterByTag(t *testing.T) {
 		name   string
 		fields fields
 		args   args
-		want   *LOLArticles
+		want   *Articles[*LOLArticle]
 	}{
 		{
 			"Test filter articles",
 			fields{
 				[]*LOLArticle{
-					{Title: "1", ArticleTags: []LOLArticleTag{{MachineName: "target"}}},
-					{Title: "2", ArticleTags: []LOLArticleTag{}},
-					{Title: "3", ArticleTags: []LOLArticleTag{{MachineName: "bar"}}},
-					{Title: "4", ArticleTags: []LOLArticleTag{{MachineName: "target"}}},
+					{Title: "1", ArticleTags: []ArticleTag{{MachineName: "target"}}},
+					{Title: "2", ArticleTags: []ArticleTag{}},
+					{Title: "3", ArticleTags: []ArticleTag{{MachineName: "bar"}}},
+					{Title: "4", ArticleTags: []ArticleTag{{MachineName: "target"}}},
 					{Title: "5"},
 				},
 			},
 			args{tagName: "target"},
-			&LOLArticles{
+			&Articles[*LOLArticle]{
 				[]*LOLArticle{
-					{Title: "1", ArticleTags: []LOLArticleTag{{MachineName: "target"}}},
-					{Title: "4", ArticleTags: []LOLArticleTag{{MachineName: "target"}}},
+					{Title: "1", ArticleTags: []ArticleTag{{MachineName: "target"}}},
+					{Title: "4", ArticleTags: []ArticleTag{{MachineName: "target"}}},
 				},
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			a := LOLArticles{
+			a := Articles[*LOLArticle]{
 				Content: tt.fields.Content,
 			}
 			if got := a.FilterByTagName(tt.args.tagName); !reflect.DeepEqual(got, tt.want) {

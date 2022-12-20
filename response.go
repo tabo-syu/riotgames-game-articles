@@ -14,8 +14,8 @@ const (
 	ValorantPatchNoteTagName = "patch_notes"
 )
 
-type WebsiteResponse interface {
-	ToArticles()
+type Article interface {
+	GetTags() []ArticleTag
 }
 
 type URL struct {
@@ -27,10 +27,8 @@ type ArticleTag struct {
 	Title       string `json:"title"`
 	MachineName string `json:"machine_name"`
 	IsHidden    bool   `json:"is_hidden"`
-	URL         LOLURL `json:"url"`
+	URL         URL    `json:"url"`
 }
-
-type LOLURL URL
 
 type LOLBanner struct {
 	UID string `json:"uid"`
@@ -46,83 +44,24 @@ type LOLAuthor struct {
 	Title string `json:"title"`
 }
 
-type LOLArticleTag ArticleTag
-
 type LOLArticle struct {
-	UID          string          `json:"uid"`
-	Title        string          `json:"title"`
-	Date         time.Time       `json:"date"`
-	Description  string          `json:"description"`
-	ArticleType  string          `json:"article_type"`
-	URL          LOLURL          `json:"url"`
-	ExternalLink string          `json:"external_link"`
-	YoutubeLink  string          `json:"youtube_link"`
-	Banner       LOLBanner       `json:"banner"`
-	Category     []LOLCategory   `json:"category"`
-	Author       []LOLAuthor     `json:"author"`
-	ArticleTags  []LOLArticleTag `json:"article_tags"`
+	UID          string        `json:"uid"`
+	Title        string        `json:"title"`
+	Date         time.Time     `json:"date"`
+	Description  string        `json:"description"`
+	ArticleType  string        `json:"article_type"`
+	URL          URL           `json:"url"`
+	ExternalLink string        `json:"external_link"`
+	YoutubeLink  string        `json:"youtube_link"`
+	Banner       LOLBanner     `json:"banner"`
+	Category     []LOLCategory `json:"category"`
+	Author       []LOLAuthor   `json:"author"`
+	ArticleTags  []ArticleTag  `json:"article_tags"`
 }
 
-type LOLArticles struct {
-	Content []*LOLArticle
+func (a LOLArticle) GetTags() []ArticleTag {
+	return a.ArticleTags
 }
-
-func (a LOLArticles) FilterByTagName(tagName string) *LOLArticles {
-	var patchNotes []*LOLArticle
-	for _, article := range a.Content {
-		for _, tag := range article.ArticleTags {
-			if tag.MachineName == tagName {
-				patchNotes = append(patchNotes, article)
-			}
-		}
-	}
-
-	return &LOLArticles{Content: patchNotes}
-}
-
-type LOLArticlesResponse struct {
-	Result struct {
-		Data struct {
-			AllArticles struct {
-				Edges []struct {
-					Article LOLArticle `json:"node"`
-				} `json:"edges"`
-			} `json:"allArticles"`
-		} `json:"data"`
-	} `json:"result"`
-}
-
-func (r LOLArticlesResponse) ToArticles() *LOLArticles {
-	var articles []*LOLArticle
-	for _, edge := range r.Result.Data.AllArticles.Edges {
-		a := edge.Article
-		articles = append(articles, &a)
-	}
-
-	return &LOLArticles{Content: articles}
-}
-
-type LOLWebsiteResponse struct {
-	Res *http.Response
-}
-
-func (r LOLWebsiteResponse) Body() (*LOLArticlesResponse, error) {
-	body, err := io.ReadAll(r.Res.Body)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read resources: %w", err)
-	}
-
-	var result LOLArticlesResponse
-	if err := json.Unmarshal(body, &result); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal json: %w", err)
-	}
-
-	return &result, nil
-}
-
-type ValorantURL URL
-
-type ValorantArticleTag ArticleTag
 
 type ValorantCategory struct {
 	Title       string `json:"title"`
@@ -141,35 +80,65 @@ type ValorantBanner struct {
 }
 
 type ValorantArticle struct {
-	ID           string               `json:"id"`
-	UID          string               `json:"uid"`
-	Title        string               `json:"title"`
-	Date         time.Time            `json:"date"`
-	Description  string               `json:"description"`
-	ArticleType  string               `json:"article_type"`
-	ExternalLink string               `json:"external_link"`
-	ArticleTags  []ValorantArticleTag `json:"article_tags"`
-	Category     []ValorantCategory   `json:"category"`
-	PathSlug     string               `json:"pathSlug"`
-	URL          ValorantURL          `json:"url"`
-	Banner       ValorantBanner       `json:"banner"`
+	ID           string             `json:"id"`
+	UID          string             `json:"uid"`
+	Title        string             `json:"title"`
+	Date         time.Time          `json:"date"`
+	Description  string             `json:"description"`
+	ArticleType  string             `json:"article_type"`
+	ExternalLink string             `json:"external_link"`
+	ArticleTags  []ArticleTag       `json:"article_tags"`
+	Category     []ValorantCategory `json:"category"`
+	PathSlug     string             `json:"pathSlug"`
+	URL          URL                `json:"url"`
+	Banner       ValorantBanner     `json:"banner"`
 }
 
-type ValorantArticles struct {
-	Content []*ValorantArticle
+func (a ValorantArticle) GetTags() []ArticleTag {
+	return a.ArticleTags
 }
 
-func (a ValorantArticles) FilterByTagName(tagName string) *ValorantArticles {
-	var articles []*ValorantArticle
+type Articles[T Article] struct {
+	Content []T
+}
+
+func (a Articles[T]) FilterByTagName(name string) *Articles[T] {
+	var articles []T
 	for _, article := range a.Content {
-		for _, tag := range article.ArticleTags {
-			if tag.MachineName == tagName {
+		for _, tag := range article.GetTags() {
+			if tag.MachineName == name {
 				articles = append(articles, article)
 			}
 		}
 	}
 
-	return &ValorantArticles{Content: articles}
+	return &Articles[T]{articles}
+}
+
+type ArticlesResponse[T Article] interface {
+	ToArticles() *Articles[T]
+}
+
+type LOLArticlesResponse struct {
+	Result struct {
+		Data struct {
+			AllArticles struct {
+				Edges []struct {
+					Article LOLArticle `json:"node"`
+				} `json:"edges"`
+			} `json:"allArticles"`
+		} `json:"data"`
+	} `json:"result"`
+}
+
+func (r LOLArticlesResponse) ToArticles() *Articles[*LOLArticle] {
+	var articles []*LOLArticle
+	for _, edge := range r.Result.Data.AllArticles.Edges {
+		a := edge.Article
+		articles = append(articles, &a)
+	}
+
+	return &Articles[*LOLArticle]{articles}
 }
 
 type ValorantArticlesResponse struct {
@@ -182,27 +151,27 @@ type ValorantArticlesResponse struct {
 	} `json:"result"`
 }
 
-func (r ValorantArticlesResponse) ToArticles() *ValorantArticles {
+func (r ValorantArticlesResponse) ToArticles() *Articles[*ValorantArticle] {
 	var articles []*ValorantArticle
 	for _, article := range r.Result.Data.AllContentstackArticles.Articles {
 		a := article
 		articles = append(articles, &a)
 	}
 
-	return &ValorantArticles{Content: articles}
+	return &Articles[*ValorantArticle]{articles}
 }
 
-type ValorantWebsiteResponse struct {
+type WebsiteResponse[T ArticlesResponse[U], U Article] struct {
 	Res *http.Response
 }
 
-func (r ValorantWebsiteResponse) Body() (*ValorantArticlesResponse, error) {
+func (r WebsiteResponse[T, U]) Body() (*T, error) {
 	body, err := io.ReadAll(r.Res.Body)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read resources: %w", err)
 	}
 
-	var result ValorantArticlesResponse
+	var result T
 	if err := json.Unmarshal(body, &result); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal json: %w", err)
 	}
