@@ -1,4 +1,4 @@
-package riotgamespatchnotes
+package riotgamesgamearticles
 
 import (
 	"reflect"

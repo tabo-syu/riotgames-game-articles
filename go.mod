@@ -1,4 +1,4 @@
-module riotgames_patchnotes
+module github.com/tabo-syu/riotgames-game-articles
 
 go 1.19
 
