@@ -44,7 +44,7 @@ const (
 // supported locales
 var (
 	LOLLocales      = []string{EnUs, EnGb, DeDe, EsEs, FrFr, ItIt, EnPl, PlPl, ElGr, RoRo, HuHu, CsCz, EsMx, PtBr, JaJp, RuRu, TrTr, EnAu, KoKr}
-	ValorantLocales = []string{EnUs, EnGb, DeDe, EsEs, FrFr, ItIt, PlPl, RuRu, TrTr, EsMx, IdId, KoKr, PtBr, ThTh, ViVn, ZhTw, ArAe}
+	ValorantLocales = []string{EnUs, EnGb, DeDe, EsEs, FrFr, ItIt, PlPl, RuRu, TrTr, EsMx, IdId, KoKr, PtBr, JaJp, ThTh, ViVn, ZhTw, ArAe}
 )
 
 type WebsiteRequest struct {
