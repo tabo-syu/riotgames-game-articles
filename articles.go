@@ -10,12 +10,12 @@ type LOLWebsiteArticles struct {
 }
 
 func NewLOLWebsiteArticles(locale string) (*LOLWebsiteArticles, error) {
-	req, err := NewLOLWebsiteRequest(context.Background(), locale)
+	req, err := newLOLWebsiteRequest(context.Background(), locale)
 	if err != nil {
 		return nil, fmt.Errorf("failed to initialize NewLOLWebsiteArticles: %w", err)
 	}
 
-	res, err := NewFetcher[LOLArticlesResponse, *LOLArticle]().Fetch(req)
+	res, err := newFetcher[LOLArticlesResponse, *LOLArticle]().Fetch(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to fetch: %w", err)
 	}
@@ -33,11 +33,11 @@ func (l LOLWebsiteArticles) All() []*LOLArticle {
 }
 
 func (l LOLWebsiteArticles) LOLPatchNotes() []*LOLArticle {
-	return l.Articles.FilterByTagName(LOLPatchNoteTagName).Content
+	return l.Articles.FilterByTagName(lolPatchNoteTagName).Content
 }
 
 func (l LOLWebsiteArticles) TFTPatchNotes() []*LOLArticle {
-	return l.Articles.FilterByTagName(TFTPatchNoteTagName).Content
+	return l.Articles.FilterByTagName(tftPatchNoteTagName).Content
 }
 
 type ValorantWebsiteArticles struct {
@@ -45,12 +45,12 @@ type ValorantWebsiteArticles struct {
 }
 
 func NewValorantWebsiteArticles(locale string) (*ValorantWebsiteArticles, error) {
-	req, err := NewValorantWebsiteRequest(context.Background(), locale)
+	req, err := newValorantWebsiteRequest(context.Background(), locale)
 	if err != nil {
 		return nil, fmt.Errorf("failed to initialize NewValorantWebsiteArticles: %w", err)
 	}
 
-	res, err := NewFetcher[ValorantArticlesResponse, *ValorantArticle]().Fetch(req)
+	res, err := newFetcher[ValorantArticlesResponse, *ValorantArticle]().Fetch(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to fetch: %w", err)
 	}
@@ -68,5 +68,5 @@ func (l ValorantWebsiteArticles) All() []*ValorantArticle {
 }
 
 func (l ValorantWebsiteArticles) PatchNotes() []*ValorantArticle {
-	return l.Articles.FilterByTagName(ValorantPatchNoteTagName).Content
+	return l.Articles.FilterByTagName(valorantPatchNoteTagName).Content
 }

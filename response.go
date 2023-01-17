@@ -9,9 +9,9 @@ import (
 )
 
 const (
-	LOLPatchNoteTagName      = "patch_notes"
-	TFTPatchNoteTagName      = "teamfight_tactics_patch_notes"
-	ValorantPatchNoteTagName = "patch_notes"
+	lolPatchNoteTagName      = "patch_notes"
+	tftPatchNoteTagName      = "teamfight_tactics_patch_notes"
+	valorantPatchNoteTagName = "patch_notes"
 )
 
 type Article interface {

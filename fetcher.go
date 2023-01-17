@@ -8,19 +8,19 @@ import (
 	"github.com/hashicorp/go-retryablehttp"
 )
 
-type Fetcher[T ArticlesResponse[U], U Article] struct {
+type fetcher[T ArticlesResponse[U], U Article] struct {
 	client *http.Client
 }
 
-func NewFetcher[T ArticlesResponse[U], U Article]() *Fetcher[T, U] {
+func newFetcher[T ArticlesResponse[U], U Article]() *fetcher[T, U] {
 	client := retryablehttp.NewClient()
 	client.RetryMax = 3
 	client.RetryWaitMin = 2 * time.Second
 
-	return &Fetcher[T, U]{client: client.StandardClient()}
+	return &fetcher[T, U]{client: client.StandardClient()}
 }
 
-func (f Fetcher[T, U]) Fetch(req *WebsiteRequest) (*WebsiteResponse[T, U], error) {
+func (f fetcher[T, U]) Fetch(req *websiteRequest) (*WebsiteResponse[T, U], error) {
 	res, err := f.client.Do(req.Req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to fetch resources: %w", err)

@@ -47,11 +47,11 @@ var (
 	ValorantLocales = []string{EnUs, EnGb, DeDe, EsEs, FrFr, ItIt, PlPl, RuRu, TrTr, EsMx, IdId, KoKr, PtBr, JaJp, ThTh, ViVn, ZhTw, ArAe}
 )
 
-type WebsiteRequest struct {
+type websiteRequest struct {
 	Req *http.Request
 }
 
-func NewWebsiteRequest(ctx context.Context, url string) (*WebsiteRequest, error) {
+func newWebsiteRequest(ctx context.Context, url string) (*websiteRequest, error) {
 	req, err := http.NewRequestWithContext(
 		ctx,
 		http.MethodGet,
@@ -64,15 +64,15 @@ func NewWebsiteRequest(ctx context.Context, url string) (*WebsiteRequest, error)
 
 	req.Header.Add("User-Agent", "RiotGames Game Articles (https://github.com/tabo-syu/riotgames-game-articles)")
 
-	return &WebsiteRequest{Req: req}, nil
+	return &websiteRequest{Req: req}, nil
 }
 
-func NewLOLWebsiteRequest(ctx context.Context, locale string) (*WebsiteRequest, error) {
+func newLOLWebsiteRequest(ctx context.Context, locale string) (*websiteRequest, error) {
 	if !slices.Contains(LOLLocales, locale) {
 		return nil, fmt.Errorf("invalid locale specified for %s: %s", lolSiteDomain, locale)
 	}
 
-	req, err := NewWebsiteRequest(ctx, fmt.Sprintf("https://%s/page-data/%s/latest-news/page-data.json", lolSiteDomain, locale))
+	req, err := newWebsiteRequest(ctx, fmt.Sprintf("https://%s/page-data/%s/latest-news/page-data.json", lolSiteDomain, locale))
 	if err != nil {
 		return nil, fmt.Errorf("failed to generate LOLWebsiteRequest: %w", err)
 	}
@@ -80,12 +80,12 @@ func NewLOLWebsiteRequest(ctx context.Context, locale string) (*WebsiteRequest, 
 	return req, nil
 }
 
-func NewValorantWebsiteRequest(ctx context.Context, locale string) (*WebsiteRequest, error) {
+func newValorantWebsiteRequest(ctx context.Context, locale string) (*websiteRequest, error) {
 	if !slices.Contains(ValorantLocales, locale) {
 		return nil, fmt.Errorf("invalid locale specified for %s: %s", valorantSiteDomain, locale)
 	}
 
-	req, err := NewWebsiteRequest(ctx, fmt.Sprintf("https://%s/page-data/%s/news/page-data.json", valorantSiteDomain, locale))
+	req, err := newWebsiteRequest(ctx, fmt.Sprintf("https://%s/page-data/%s/news/page-data.json", valorantSiteDomain, locale))
 	if err != nil {
 		return nil, fmt.Errorf("failed to generate NewValorantWebsiteRequest: %w", err)
 	}

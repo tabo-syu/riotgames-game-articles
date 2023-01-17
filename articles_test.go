@@ -35,17 +35,17 @@ func TestLOLWebsiteArticles_All(t *testing.T) {
 			fields{
 				&Articles[*LOLArticle]{
 					[]*LOLArticle{
-						{Title: "title1", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}, {MachineName: TFTPatchNoteTagName}}},
-						{Title: "title2", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}}},
-						{Title: "title3", ArticleTags: []ArticleTag{{MachineName: TFTPatchNoteTagName}}},
+						{Title: "title1", ArticleTags: []ArticleTag{{MachineName: lolPatchNoteTagName}, {MachineName: tftPatchNoteTagName}}},
+						{Title: "title2", ArticleTags: []ArticleTag{{MachineName: lolPatchNoteTagName}}},
+						{Title: "title3", ArticleTags: []ArticleTag{{MachineName: tftPatchNoteTagName}}},
 						{Title: "title4", ArticleTags: []ArticleTag{}},
 					},
 				},
 			},
 			[]*LOLArticle{
-				{Title: "title1", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}, {MachineName: TFTPatchNoteTagName}}},
-				{Title: "title2", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}}},
-				{Title: "title3", ArticleTags: []ArticleTag{{MachineName: TFTPatchNoteTagName}}},
+				{Title: "title1", ArticleTags: []ArticleTag{{MachineName: lolPatchNoteTagName}, {MachineName: tftPatchNoteTagName}}},
+				{Title: "title2", ArticleTags: []ArticleTag{{MachineName: lolPatchNoteTagName}}},
+				{Title: "title3", ArticleTags: []ArticleTag{{MachineName: tftPatchNoteTagName}}},
 				{Title: "title4", ArticleTags: []ArticleTag{}},
 			},
 		},
@@ -76,16 +76,16 @@ func TestLOLWebsiteArticles_LOLPatchNotes(t *testing.T) {
 			fields{
 				&Articles[*LOLArticle]{
 					[]*LOLArticle{
-						{Title: "title1", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}, {MachineName: TFTPatchNoteTagName}}},
-						{Title: "title2", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}}},
-						{Title: "title3", ArticleTags: []ArticleTag{{MachineName: TFTPatchNoteTagName}}},
+						{Title: "title1", ArticleTags: []ArticleTag{{MachineName: lolPatchNoteTagName}, {MachineName: tftPatchNoteTagName}}},
+						{Title: "title2", ArticleTags: []ArticleTag{{MachineName: lolPatchNoteTagName}}},
+						{Title: "title3", ArticleTags: []ArticleTag{{MachineName: tftPatchNoteTagName}}},
 						{Title: "title4", ArticleTags: []ArticleTag{}},
 					},
 				},
 			},
 			[]*LOLArticle{
-				{Title: "title1", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}, {MachineName: TFTPatchNoteTagName}}},
-				{Title: "title2", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}}},
+				{Title: "title1", ArticleTags: []ArticleTag{{MachineName: lolPatchNoteTagName}, {MachineName: tftPatchNoteTagName}}},
+				{Title: "title2", ArticleTags: []ArticleTag{{MachineName: lolPatchNoteTagName}}},
 			},
 		},
 	}
@@ -115,16 +115,16 @@ func TestLOLWebsiteArticles_TFTPatchNotes(t *testing.T) {
 			fields{
 				&Articles[*LOLArticle]{
 					[]*LOLArticle{
-						{Title: "title1", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}, {MachineName: TFTPatchNoteTagName}}},
-						{Title: "title2", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}}},
-						{Title: "title3", ArticleTags: []ArticleTag{{MachineName: TFTPatchNoteTagName}}},
+						{Title: "title1", ArticleTags: []ArticleTag{{MachineName: lolPatchNoteTagName}, {MachineName: tftPatchNoteTagName}}},
+						{Title: "title2", ArticleTags: []ArticleTag{{MachineName: lolPatchNoteTagName}}},
+						{Title: "title3", ArticleTags: []ArticleTag{{MachineName: tftPatchNoteTagName}}},
 						{Title: "title4", ArticleTags: []ArticleTag{}},
 					},
 				},
 			},
 			[]*LOLArticle{
-				{Title: "title1", ArticleTags: []ArticleTag{{MachineName: LOLPatchNoteTagName}, {MachineName: TFTPatchNoteTagName}}},
-				{Title: "title3", ArticleTags: []ArticleTag{{MachineName: TFTPatchNoteTagName}}},
+				{Title: "title1", ArticleTags: []ArticleTag{{MachineName: lolPatchNoteTagName}, {MachineName: tftPatchNoteTagName}}},
+				{Title: "title3", ArticleTags: []ArticleTag{{MachineName: tftPatchNoteTagName}}},
 			},
 		},
 	}
@@ -168,13 +168,13 @@ func TestValorantWebsiteArticles_All(t *testing.T) {
 			fields{
 				&Articles[*ValorantArticle]{
 					[]*ValorantArticle{
-						{Title: "title1", ArticleTags: []ArticleTag{{MachineName: ValorantPatchNoteTagName}}},
+						{Title: "title1", ArticleTags: []ArticleTag{{MachineName: valorantPatchNoteTagName}}},
 						{Title: "title2", ArticleTags: []ArticleTag{}},
 					},
 				},
 			},
 			[]*ValorantArticle{
-				{Title: "title1", ArticleTags: []ArticleTag{{MachineName: ValorantPatchNoteTagName}}},
+				{Title: "title1", ArticleTags: []ArticleTag{{MachineName: valorantPatchNoteTagName}}},
 				{Title: "title2", ArticleTags: []ArticleTag{}},
 			},
 		},
@@ -205,13 +205,13 @@ func TestValorantWebsiteArticles_PatchNotes(t *testing.T) {
 			fields{
 				&Articles[*ValorantArticle]{
 					[]*ValorantArticle{
-						{Title: "title1", ArticleTags: []ArticleTag{{MachineName: ValorantPatchNoteTagName}}},
+						{Title: "title1", ArticleTags: []ArticleTag{{MachineName: valorantPatchNoteTagName}}},
 						{Title: "title2", ArticleTags: []ArticleTag{}},
 					},
 				},
 			},
 			[]*ValorantArticle{
-				{Title: "title1", ArticleTags: []ArticleTag{{MachineName: ValorantPatchNoteTagName}}},
+				{Title: "title1", ArticleTags: []ArticleTag{{MachineName: valorantPatchNoteTagName}}},
 			},
 		},
 	}
